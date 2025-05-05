@@ -1,0 +1,231 @@
+[project]
+name = "hatch-timestamp-version"
+dynamic = ["version"]
+description = "plugin that provides a custom version scheme using UTC timestamps for development versions."
+authors = [{ name = "Visesh Prasad", email = "viseshrprasad@gmail.com" }]
+readme = "README.md"
+keywords = ["python"]
+requires-python = ">=3.9,<4.0"
+dependencies = []
+license = { text = "MIT" }
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://viseshrp.github.io/hatch-timestamp-version/"
+Repository = "https://github.com/viseshrp/hatch-timestamp-version"
+Documentation = "https://viseshrp.github.io/hatch-timestamp-version/"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.2.0",
+    "uv>=0.6.17",
+    "tox-uv>=1.25.0",
+    "mypy>=1.15.0",
+    "deptry>=0.23.0",
+    "pytest>=8.3.5",
+    "pytest-cov>=6.1.1",
+    "vulture>=2.14",
+    
+]
+
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+path = "hatch_timestamp_version/_version.py"
+
+[tool.hatch.version.raw-options]
+version_scheme = "guess-next-dev"
+local_scheme = "no-local-version"
+
+[tool.mypy]
+files = [
+    "hatch_timestamp_version"
+]
+disallow_untyped_defs = true
+no_implicit_optional = true
+check_untyped_defs = true
+warn_return_any = true
+warn_unused_ignores = true
+show_error_codes = true
+ignore_missing_imports = true
+follow_imports = "silent"
+disable_error_code = ["import-untyped"]
+
+[tool.pytest.ini_options]
+tmp_path_retention_policy = "failed"
+testpaths = ["tests"]
+addopts = "--capture=tee-sys --tb=native -p no:warnings -vv"
+markers = [
+    "integration:Run integration tests",
+    "smoke:Run the smoke tests",
+    "unit:Run the unit tests",
+]
+norecursedirs = [
+    ".git",
+    ".idea",
+]
+filterwarnings = [
+    "ignore:.+:DeprecationWarning"
+]
+
+# Configuration for coverage.py
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+# Regexes for lines to exclude from consideration
+exclude_lines = [
+    # Have to re-enable the standard pragma
+    "pragma: no cover",
+    # Don't complain about missing debug-only code:
+    "def __repr__",
+    "if self\\.debug",
+    # Don't complain if tests don't hit defensive assertion code:
+    "raise AssertionError",
+    "raise NotImplementedError",
+    # Don't complain if non-runnable code isn't run:
+    "if 0:",
+    "if __name__ == .__main__.:",
+    # Don't complain about abstract methods, they aren't run:
+    "@(abc\\.)?abstractmethod",
+]
+
+[tool.coverage.run]
+branch = true
+omit = ["hatch_timestamp_version/__main__.py"]
+source = [
+    "hatch_timestamp_version"
+]
+
+[tool.coverage.html]
+show_contexts = true
+
+
+[tool.ruff]
+target-version = "py39"
+line-length = 120
+fix = true
+exclude = [".venv", "__init__.py"]
+
+[tool.ruff.lint]
+select = [
+    # flake8-2020
+    "YTT",
+    # flake8-bandit
+    "S",
+    # flake8-bugbear
+    "B",
+    # flake8-builtins
+    "A",
+    # flake8-comprehensions
+    "C4",
+    # flake8-debugger
+    "T10",
+    # flake8-simplify
+    "SIM",
+    # isort (keep this if you want Ruff to sort imports)
+    "I",
+    # mccabe
+    "C90",
+    # pycodestyle
+    "E", "W",
+    # pyflakes
+    "F",
+    # pygrep-hooks
+    "PGH",
+    # pyupgrade
+    "UP",
+    # ruff-native rules
+    "RUF",
+    # try/except linting
+    "TRY",
+]
+ignore = [
+    "E501", # Line too long
+    "E731", # Do not assign a lambda expression
+    "E203", # Whitespace before ':'
+    "W605", # Invalid escape sequence
+    "F821", # Undefined name
+    "C901", # Function is too complex
+    "B904", # Exception chaining advice
+    "N813", # CamelCase imported as lowercase
+    "B903", # Suggest using __slots__ or immutability
+    "N801", # Class name should use CapWords
+    "N802", # Function name should be lowercase
+    "N818", # Exception name should end in 'Error'
+    "F401", # Imported but unused
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101"]
+
+[tool.black]
+line-length = 100
+target-version = ["py39"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["hatch_timestamp_version", "tests"]
+force-sort-within-sections = true
+
+[tool.codespell]
+ignore-words = "codespell.txt"
+skip = '*.pyc,*.xml,*.gif,*.png,*.jpg,*.js,*.html,*.json,*.gz,Makefile'
+quiet-level = 3
+
+[tool.bandit]
+targets = ["hatch_timestamp_version", ]
+recursive = true
+number = 3
+severity_level = "high"
+require_serial = true
+exclude_dirs = ["venv/*", ".venv/*", "tests/*"]
+
+[tool.pre-commit.default_language_versions]
+python = "3.11"
+
+[tool.tox]
+min_version = "4.0"
+env_list = ["py39", "py310", "py311", "py312", "py313"]
+skipsdist = true
+
+[tool.tox.root]
+skipsdist = true
+
+[tool.tox-gh-actions]
+python = { "3.9" = "py39", "3.10" = "py310", "3.11" = "py311", "3.12" = "py312", "3.13" = "py313" }
+
+[tool.tox.env.py39]
+pass_env = ["PYTHON_VERSION"]
+allowlist_externals = ["uv"]
+commands = [
+    ["uv", "sync", "--python", "{envpython}"],
+    ["uv", "run", "python", "-m", "pytest", "tests", "--cov", "--cov-config=pyproject.toml", "--cov-report=xml"],
+    ["uv", "run", "mypy"]
+]
+
+[tool.tox.env.py310]
+inherits = "py39"
+
+[tool.tox.env.py311]
+inherits = "py39"
+
+[tool.tox.env.py312]
+inherits = "py39"
+
+[tool.tox.env.py313]
+inherits = "py39"
