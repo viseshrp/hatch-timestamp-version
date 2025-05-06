@@ -1,0 +1,24 @@
+{
+  "template": "https://github.com/viseshrp/yapc",
+  "commit": "7afab4de5f595a0560a11ad73d8c1b52a6ef0dd0",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "author": "Visesh Prasad",
+      "email": "viseshrprasad@gmail.com",
+      "github_username": "viseshrp",
+      "pypi_username": "viseshrp",
+      "project_name": "hatch-timestamp-version",
+      "project_slug": "hatch_timestamp_version",
+      "project_description": "plugin that provides a custom version scheme using UTC timestamps for development versions.",
+      "cli_tool": "n",
+      "codecov": "y",
+      "git_init": "y",
+      "github_actions": "y",
+      "publish_to_pypi": "y",
+      "_template": "https://github.com/viseshrp/yapc",
+      "_commit": "7afab4de5f595a0560a11ad73d8c1b52a6ef0dd0"
+    }
+  },
+  "directory": null
+}
