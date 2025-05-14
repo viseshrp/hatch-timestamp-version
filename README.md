@@ -17,7 +17,8 @@
 
 I have CI continuously deploy to 'Test PyPI' and I want packages to have the datetime as
 dev versions.
-Eg: reelname-1.0.1.dev20250503202530-py3-none-any.whl
+
+Eg: ``reelname-1.0.1.dev20250503202530-py3-none-any.whl``
 
 ## 🛠️ Features
 
@@ -34,16 +35,16 @@ pip install hatch-timestamp-version
 In your ``pyproject.toml``:
 ```toml
 [build-system]
-requires = ["hatchling", "hatch-vcs"]
+requires = ["hatchling", "hatch-vcs", "hatch-timestamp-version"]
 build-backend = "hatchling.build"
 
 [tool.hatch.version]
 source = "vcs"
 path = "yourpkg/_version.py"
-version_scheme = "timestamp-dev"
 
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"
+version_scheme = "timestamp-dev"
 ```
 
 ## 📐 Requirements
