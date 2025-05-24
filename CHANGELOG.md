@@ -23,18 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -
 
-## [1.0.0] - <date>
-
-### Added
-
-- First release
-
 ## [0.0.1] - <date>
 
 ### Added
 
 - Stub release
-
-[unreleased]: https://github.com/viseshrp/hatch-timestamp-version/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/viseshrp/hatch-timestamp-version/releases/tag/v1.0.0
-[0.0.1]: https://github.com/viseshrp/hatch-timestamp-version/releases/tag/v0.0.1

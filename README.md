@@ -1,7 +1,7 @@
 # hatch-timestamp-version
 
-[![PyPI version](https://img.shields.io/pypi/v/hatch_timestamp_version.svg)](https://pypi.org/project/hatch_timestamp_version/)
-[![Python versions](https://img.shields.io/pypi/pyversions/hatch_timestamp_version.svg?logo=python&logoColor=white)](https://pypi.org/project/hatch_timestamp_version/)
+[![PyPI version](https://img.shields.io/pypi/v/hatch-timestamp-version.svg)](https://pypi.org/project/hatch-timestamp-version/)
+[![Python versions](https://img.shields.io/pypi/pyversions/hatch-timestamp-version.svg?logo=python&logoColor=white)](https://pypi.org/project/hatch-timestamp-version/)
 [![CI](https://github.com/viseshrp/hatch-timestamp-version/actions/workflows/main.yml/badge.svg)](https://github.com/viseshrp/hatch-timestamp-version/actions/workflows/main.yml)
 [![Coverage](https://codecov.io/gh/viseshrp/hatch-timestamp-version/branch/main/graph/badge.svg)](https://codecov.io/gh/viseshrp/hatch-timestamp-version)
 [![License: MIT](https://img.shields.io/github/license/viseshrp/hatch-timestamp-version)](https://github.com/viseshrp/hatch-timestamp-version/blob/main/LICENSE)
@@ -20,9 +20,9 @@ dev versions.
 
 Eg: ``reelname-1.0.1.dev20250503202530-py3-none-any.whl``
 
-## 🛠️ Features
+## 📐 Requirements
 
-* Uses datetime for the dev versions, when used with hatch-vcs
+* Python >= 3.9
 
 ## 📦 Installation
 
@@ -47,9 +47,9 @@ local_scheme = "no-local-version"
 version_scheme = "timestamp-dev"
 ```
 
-## 📐 Requirements
+## 🛠️ Features
 
-* Python >= 3.9
+* Uses datetime for the dev versions, when used with hatch-vcs
 
 ## 🧾 Changelog
 

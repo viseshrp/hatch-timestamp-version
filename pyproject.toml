@@ -10,10 +10,12 @@ dependencies = ["hatchling"]
 license = { text = "MIT" }
 classifiers = [
     "Development Status :: 4 - Beta",
-    "Intended Audience :: Developers",
-    "Topic :: Software Development :: Build Tools",
     "Framework :: Hatch",
     "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
@@ -21,24 +23,30 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
-    "Operating System :: OS Independent",
 ]
 
 [project.urls]
-Homepage = "https://viseshrp.github.io/hatch-timestamp-version/"
+Homepage = "https://github.com/viseshrp/hatch-timestamp-version"
 Repository = "https://github.com/viseshrp/hatch-timestamp-version"
-Documentation = "https://viseshrp.github.io/hatch-timestamp-version/"
+Documentation = "https://github.com/viseshrp/hatch-timestamp-version/blob/main/README.md"
+Changelog = "https://github.com/viseshrp/hatch-timestamp-version/blob/main/CHANGELOG.md"
+Bug-Tracker = "https://github.com/viseshrp/hatch-timestamp-version/issues"
+CI = "https://github.com/viseshrp/hatch-timestamp-version/actions"
 
 [dependency-groups]
 dev = [
     "pre-commit>=4.2.0",
     "uv>=0.6.17",
+    "tox>=4.25.0",
     "tox-uv>=1.25.0",
+    "tox-gh-actions>=3.3.0",
     "mypy>=1.15.0",
     "deptry>=0.23.0",
     "pytest>=8.3.5",
     "pytest-cov>=6.1.1",
     "vulture>=2.14",
+    "twine>=6.1.0",
+    "ipdb>=0.13.13",
 ]
 
 [build-system]
@@ -56,6 +64,16 @@ scheme = "timestamp-dev"
 
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"
+version_scheme = "guess-next-dev"
+
+[tool.hatch.build.targets.wheel]
+packages = ["hatch_timestamp_version"]
+
+[tool.hatch.build.targets.editable]
+packages = ["hatch_timestamp_version"]
+
+[tool.uv]
+default-groups = "all"
 
 [tool.mypy]
 files = [
@@ -74,7 +92,7 @@ disable_error_code = ["import-untyped"]
 [tool.pytest.ini_options]
 tmp_path_retention_policy = "failed"
 testpaths = ["tests"]
-addopts = "--capture=tee-sys --tb=native -p no:warnings -vv"
+addopts = "--capture=tee-sys --tb=native -p no:warnings -ra -vv"
 markers = [
     "integration:Run integration tests",
     "smoke:Run the smoke tests",
@@ -119,14 +137,13 @@ source = [
 [tool.coverage.html]
 show_contexts = true
 
-
 [tool.ruff]
 target-version = "py39"
-line-length = 120
-fix = true
+line-length = 100
 exclude = [".venv", "__init__.py"]
 
 [tool.ruff.lint]
+fixable = ["ALL"]
 select = [
     # flake8-2020
     "YTT",
@@ -148,6 +165,8 @@ select = [
     "C90",
     # pycodestyle
     "E", "W",
+    # pep8-naming rules
+    "N",
     # pyflakes
     "F",
     # pygrep-hooks
@@ -158,21 +177,12 @@ select = [
     "RUF",
     # try/except linting
     "TRY",
+    # Disallow print statements
+    "T201",
 ]
 ignore = [
-    "E501", # Line too long
-    "E731", # Do not assign a lambda expression
-    "E203", # Whitespace before ':'
-    "W605", # Invalid escape sequence
-    "F821", # Undefined name
     "C901", # Function is too complex
-    "B904", # Exception chaining advice
-    "N813", # CamelCase imported as lowercase
-    "B903", # Suggest using __slots__ or immutability
-    "N801", # Class name should use CapWords
-    "N802", # Function name should be lowercase
-    "N818", # Exception name should end in 'Error'
-    "F401", # Imported but unused
+    "PGH003" # blanket-type-ignore
 ]
 
 [tool.ruff.lint.mccabe]
@@ -181,13 +191,13 @@ max-complexity = 10
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101"]
 
-[tool.black]
-line-length = 100
-target-version = ["py39"]
-
 [tool.ruff.lint.isort]
 known-first-party = ["hatch_timestamp_version", "tests"]
 force-sort-within-sections = true
+
+[tool.black]
+line-length = 100
+target-version = ["py39"]
 
 [tool.codespell]
 ignore-words = "codespell.txt"
@@ -203,36 +213,4 @@ require_serial = true
 exclude_dirs = ["venv/*", ".venv/*", "tests/*"]
 
 [tool.pre-commit.default_language_versions]
-python = "3.11"
-
-[tool.tox]
-min_version = "4.0"
-env_list = ["py39", "py310", "py311", "py312", "py313"]
-skipsdist = true
-
-[tool.tox.root]
-skipsdist = true
-
-[tool.tox-gh-actions]
-python = { "3.9" = "py39", "3.10" = "py310", "3.11" = "py311", "3.12" = "py312", "3.13" = "py313" }
-
-[tool.tox.env.py39]
-pass_env = ["PYTHON_VERSION"]
-allowlist_externals = ["uv"]
-commands = [
-    ["uv", "sync", "--python", "{envpython}"],
-    ["uv", "run", "python", "-m", "pytest", "tests", "--cov", "--cov-config=pyproject.toml", "--cov-report=xml"],
-    ["uv", "run", "mypy"]
-]
-
-[tool.tox.env.py310]
-inherits = "py39"
-
-[tool.tox.env.py311]
-inherits = "py39"
-
-[tool.tox.env.py312]
-inherits = "py39"
-
-[tool.tox.env.py313]
-inherits = "py39"
+python = "3.13"
