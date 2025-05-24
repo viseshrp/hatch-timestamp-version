@@ -9,7 +9,7 @@
 [![Lint: Ruff](https://img.shields.io/badge/lint-ruff-000000.svg)](https://docs.astral.sh/ruff/)
 [![Typing: mypy](https://img.shields.io/badge/typing-checked-blue.svg)](https://mypy.readthedocs.io/en/stable/)
 
-> plugin that provides a custom version scheme using UTC timestamps for development versions.
+> A [hatch](https://hatch.pypa.io/dev/plugins/version-scheme/reference/#hatchling.version.scheme.plugin.interface.VersionSchemeInterface--pluginpy) plugin that provides a custom version scheme using UTC timestamps for development versions.
 
 ![Demo](https://raw.githubusercontent.com/viseshrp/hatch-timestamp-version/main/demo.gif)
 
@@ -45,6 +45,12 @@ path = "yourpkg/_version.py"
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"
 version_scheme = "timestamp-dev"
+
+[tool.hatch.build.targets.wheel]
+packages = ["reelname"]
+
+[tool.hatch.build.targets.editable]
+packages = ["reelname"]
 ```
 
 ## 🛠️ Features
