@@ -20,5 +20,16 @@
       "_commit": "7afab4de5f595a0560a11ad73d8c1b52a6ef0dd0"
     }
   },
-  "directory": null
+  "directory": null,
+  "skip": [
+    ".venv",
+    "dist",
+    "build",
+    "*.egg-info",
+    ".DS_Store",
+    "__pycache__",
+    ".git",
+    ".idea",
+    ".vscode"
+  ]
 }
