@@ -9,9 +9,7 @@
 [![Lint: Ruff](https://img.shields.io/badge/lint-ruff-000000.svg)](https://docs.astral.sh/ruff/)
 [![Typing: mypy](https://img.shields.io/badge/typing-checked-blue.svg)](https://mypy.readthedocs.io/en/stable/)
 
-> A [hatch](https://hatch.pypa.io/dev/plugins/version-scheme/reference/#hatchling.version.scheme.plugin.interface.VersionSchemeInterface--pluginpy) plugin that provides a custom version scheme using UTC timestamps for development versions.
-
-![Demo](https://raw.githubusercontent.com/viseshrp/hatch-timestamp-version/main/demo.gif)
+> A [hatch](https://hatch.pypa.io/) plugin that provides a custom version scheme using UTC timestamps for development versions.
 
 ## 🚀 Why this project exists
 
