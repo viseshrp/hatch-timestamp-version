@@ -45,10 +45,10 @@ local_scheme = "no-local-version"
 version_scheme = "timestamp-dev"
 
 [tool.hatch.build.targets.wheel]
-packages = ["reelname"]
+packages = ["yourpkg"]
 
 [tool.hatch.build.targets.editable]
-packages = ["reelname"]
+packages = ["yourpkg"]
 ```
 
 ## 🛠️ Features
