@@ -76,6 +76,9 @@ publish-test: ## Publish to TestPyPI (for dry runs)
 .PHONY: build-and-publish
 build-and-publish: build check-dist publish ## Build and publish in one step
 
+vendor-update: ## Update vendored dependencies
+	rsync -a vendor/hatch-vcs/hatch_vcs hatch_timestamp_version/_vendor/
+
 .PHONY: help
 help:
 	uv run python -c "import re; \
