@@ -1,0 +1,3 @@
+[submodule "vendor/hatch-vcs"]
+	path = vendor/hatch-vcs
+	url = https://github.com/ofek/hatch-vcs.git
