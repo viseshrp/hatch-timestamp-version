@@ -89,6 +89,7 @@ show_error_codes = true
 ignore_missing_imports = true
 follow_imports = "silent"
 disable_error_code = ["import-untyped"]
+exclude = "hatch_timestamp_version/_vendor"
 
 [tool.pytest.ini_options]
 tmp_path_retention_policy = "failed"
@@ -141,7 +142,7 @@ show_contexts = true
 [tool.ruff]
 target-version = "py39"
 line-length = 100
-exclude = [".venv", "__init__.py"]
+exclude = [".venv", "__init__.py", "hatch_timestamp_version/_vendor"]
 
 [tool.ruff.lint]
 fixable = ["ALL"]
@@ -211,7 +212,7 @@ recursive = true
 number = 3
 severity_level = "high"
 require_serial = true
-exclude_dirs = ["venv/*", ".venv/*", "tests/*"]
+exclude_dirs = ["venv/*", ".venv/*", "tests/*", "hatch_timestamp_version/_vendor/*"]
 
 [tool.pre-commit.default_language_versions]
 python = "3.13"
