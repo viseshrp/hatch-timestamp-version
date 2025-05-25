@@ -57,13 +57,11 @@ requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project.entry-points.hatch]
-timestamp-dev = "hatch_timestamp_version.ts_plugin.hooks"
+timestamp-dev = "hatch_timestamp_version.hooks"
 
 [tool.hatch.version]
 source = "vcs"
 path = "hatch_timestamp_version/_version.py"
-validate-bump = true
-scheme = "timestamp-dev"
 
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"

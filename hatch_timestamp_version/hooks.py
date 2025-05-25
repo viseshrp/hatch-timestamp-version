@@ -1,7 +1,7 @@
 from hatchling.plugin import hookimpl
 from hatchling.version.scheme.plugin.interface import VersionSchemeInterface
 
-from ..ts_scheme import TimestampDevVersionScheme
+from .ts_scheme import TimestampDevVersionScheme
 
 
 @hookimpl
