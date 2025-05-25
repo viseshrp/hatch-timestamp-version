@@ -21,6 +21,7 @@ def hatch_register_build_hook():
 def hatch_register_metadata_hook():
     return VCSMetadataHook
 
+
 @hookimpl
 def hatch_register_version_scheme() -> type[VersionSchemeInterface]:
     return TimestampDevVersionScheme
