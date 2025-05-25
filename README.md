@@ -38,17 +38,13 @@ build-backend = "hatchling.build"
 
 [tool.hatch.version]
 source = "vcs"
-path = "yourpkg/_version.py"
+scheme = "timestamp-dev"
+validate-bump = true
+path = "your_pkg/_version.py"
 
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"
-version_scheme = "timestamp-dev"
-
-[tool.hatch.build.targets.wheel]
-packages = ["yourpkg"]
-
-[tool.hatch.build.targets.editable]
-packages = ["yourpkg"]
+version_scheme = "guess-next-dev"
 ```
 
 ## 🛠️ Features
