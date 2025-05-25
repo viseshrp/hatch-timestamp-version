@@ -406,6 +406,7 @@ name = "hatch-timestamp-version"
 source = { editable = "." }
 dependencies = [
     { name = "hatchling" },
+    { name = "packaging" },
 ]
 
 [package.dev-dependencies]
@@ -425,7 +426,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "hatchling" }]
+requires-dist = [
+    { name = "hatchling" },
+    { name = "packaging", specifier = ">=25.0" },
+]
 
 [package.metadata.requires-dev]
 dev = [
