@@ -55,6 +55,11 @@ packages = ["yourpkg"]
 
 * Uses datetime for the dev versions, when used with hatch-vcs
 
+```bash
+$ hatch version
+# => reelname-1.0.3.dev20250524011230
+```
+
 ## 🧾 Changelog
 
 See [CHANGELOG.md](https://github.com/viseshrp/hatch-timestamp-version/blob/main/CHANGELOG.md)
