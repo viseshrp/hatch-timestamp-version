@@ -27,9 +27,11 @@ repos:
     rev: 25.1.0
     hooks:
       - id: black
+        exclude: ^hatch_timestamp_version/_vendor/
         args: [
           --line-length=100,
-          --target-version=py39
+          --target-version=py39,
+          --exclude=hatch_timestamp_version/_vendor
         ]
 
   - repo: https://github.com/PyCQA/bandit
@@ -56,6 +58,7 @@ repos:
         name: mypy
         entry: mypy
         language: system
+        exclude: ^hatch_timestamp_version/_vendor/
         types: [ python ]
         args: [
           "--disallow-untyped-defs",
