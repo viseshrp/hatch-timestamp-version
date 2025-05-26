@@ -1,4 +1,4 @@
-from hatch_timestamp_version.ts_plugin import hooks
+from hatch_timestamp_version import hooks
 
 
 def test_hook() -> None:
