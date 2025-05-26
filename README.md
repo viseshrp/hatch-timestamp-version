@@ -17,7 +17,7 @@
 I have CI continuously deploy to 'Test PyPI' and I want packages to have the datetime as
 dev versions.
 
-Eg: ``reelname-1.0.1.dev20250503202530-py3-none-any.whl``
+Eg: ``reelname-2.0.4.dev20250526231209-py3-none-any.whl``
 
 ## 📐 Requirements
 
@@ -50,10 +50,14 @@ timestamp_format = "short"  # or "long" for full datetime or any strftime string
 ## 🛠️ Features
 
 * Uses datetime for the dev versions, when used with hatch-vcs
+* Supports three options for timestamp format:
+  * `short` - `YYYYMMDD`
+  * `long` - `YYYYMMDDHHMMSS` (default)
+  * Custom strftime formats like `%Y%m%d%H%M`
 
 ```bash
 $ hatch version
-# => reelname-1.0.3.dev20250524011230
+2.0.4.dev20250526231209
 ```
 
 ## 🧾 Changelog
