@@ -17,10 +17,6 @@ repos:
     hooks:
       # Run the linter alone
       - id: ruff-check
-        args: [
-          --fix,
-          --exit-non-zero-on-fix
-        ]
 
   # 🧪 Typing, dependency, security checks
   - repo: https://github.com/psf/black
@@ -28,17 +24,18 @@ repos:
     hooks:
       - id: black
         exclude: ^hatch_timestamp_version/_vendor/
-        args: [
-          --line-length=100,
-          --target-version=py39,
-          --exclude=hatch_timestamp_version/_vendor
-        ]
 
   - repo: https://github.com/PyCQA/bandit
     rev: 1.8.3
     hooks:
       - id: bandit
-        args: [ "-lll", "-n", "3", "-r", "-x", "venv/*,setup.py,tests/*" ]
+        args: [
+          "-c", "pyproject.toml",
+          "-r",
+          "-n", "3",
+          "--severity-level", "high"
+        ]
+        additional_dependencies: [ "bandit[toml]" ]
 
   - repo: https://github.com/codespell-project/codespell
     rev: v2.4.1
@@ -60,23 +57,14 @@ repos:
         language: system
         exclude: ^hatch_timestamp_version/_vendor/
         types: [ python ]
-        args: [
-          "--disallow-untyped-defs",
-          "--no-implicit-optional",
-          "--warn-unused-ignores",
-          "--warn-return-any"
-        ]
+        args: [ "--config-file=pyproject.toml" ]
 
       - id: vulture
         name: vulture
         entry: vulture
         language: system
         types: [ python ]
-        args: [
-          "hatch_timestamp_version",
-          "tests",
-          "--min-confidence", "80"
-        ]
+        args: [ "--config", "pyproject.toml" ]
         pass_filenames: false
 
       - id: deptry
@@ -85,4 +73,5 @@ repos:
         language: python
         language_version: python3
         types: [ python ]
+        args: [ "--config", "pyproject.toml" ]
         pass_filenames: false

@@ -143,6 +143,7 @@ show_contexts = true
 target-version = "py39"
 line-length = 100
 exclude = [".venv", "__init__.py", "hatch_timestamp_version/_vendor"]
+fix = true
 
 [tool.ruff.lint]
 fixable = ["ALL"]
@@ -208,17 +209,20 @@ quiet-level = 3
 
 [tool.bandit]
 targets = ["hatch_timestamp_version", ]
-recursive = true
-number = 3
-severity_level = "high"
-require_serial = true
 exclude_dirs = ["venv/*", ".venv/*", "tests/*", "hatch_timestamp_version/_vendor/*"]
 
 [tool.deptry]
+exclude = ["venv/.*", ".venv/.*", "tests/.*"]
 extend_exclude = [
     "hatch_timestamp_version/_vendor/.*",
     "vendor/*"
 ]
+
+[tool.vulture]
+paths = ["hatch_timestamp_version", "tests"]
+min_confidence = 80
+sort_by_size = true
+exclude = ["venv/", ".venv/"]
 
 [tool.pre-commit.default_language_versions]
 python = "3.13"
