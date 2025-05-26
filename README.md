@@ -9,7 +9,8 @@
 [![Lint: Ruff](https://img.shields.io/badge/lint-ruff-000000.svg)](https://docs.astral.sh/ruff/)
 [![Typing: mypy](https://img.shields.io/badge/typing-checked-blue.svg)](https://mypy.readthedocs.io/en/stable/)
 
-> A [hatch](https://hatch.pypa.io/) plugin that provides a custom version scheme using UTC timestamps for development versions.
+> A [hatch](https://hatch.pypa.io/) plugin that provides a custom version scheme using UTC timestamps for
+> development versions. It is based on top of [hatch-vcs](https://github.com/ofek/hatch-vcs).
 
 ## 🚀 Why this project exists
 
@@ -33,14 +34,17 @@ pip install hatch-timestamp-version
 In your ``pyproject.toml``:
 ```toml
 [build-system]
-requires = ["hatchling", "hatch-timestamp-version>=0.0.4"]
+requires = ["hatchling", "hatch-timestamp-version>=0.0.5"]
 build-backend = "hatchling.build"
 
 [tool.hatch.version]
-path = "reelname/_version.py"
+path = "yourpkg/_version.py"
 source = "timestamp-dev"
 scheme = "timestamp-dev"
 validate-bump = true
+
+[tool.hatch.version.raw-options]
+local_scheme = "no-local-version"
 ```
 
 ## 🛠️ Features
