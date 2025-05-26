@@ -26,26 +26,33 @@ class TimestampDevVersionScheme(VersionSchemeInterface):
         """
         timestamp_fmt = self._timestamp_fmt
         if not isinstance(timestamp_fmt, str):
-            message = "option `timestamp_format` must be a string"
-            raise TypeError(message)
-        # Get format string from user config
-        if timestamp_fmt == "short":
-            fmt = "%Y%m%d"
-        elif timestamp_fmt == "long" or timestamp_fmt == "default":
-            fmt = "%Y%m%d%H%M%S"
-        else:
-            # Validate custom strftime format
-            try:
-                datetime.now(timezone.utc).strftime(timestamp_fmt)
-                fmt = timestamp_fmt
-            except Exception as e:
-                msg = (
-                    f"Invalid timestamp format '{timestamp_fmt}'. "
-                    "Use 'short', 'long', or a valid strftime pattern like '%Y%m%d%H%M'."
-                )
-                raise ValueError(msg) from e
+            msg = "option `timestamp_format` must be a string"
+            raise TypeError(msg)
 
-        return fmt
+        if timestamp_fmt == "short":
+            return "%Y%m%d"
+        elif timestamp_fmt in {"long", "default"}:
+            return "%Y%m%d%H%M%S"
+
+        # Validate custom strftime format
+        try:
+            preview = datetime.now(timezone.utc).strftime(timestamp_fmt)
+        except Exception as e:
+            msg = (
+                f"Invalid timestamp format '{timestamp_fmt}': {e}. "
+                "Use 'short', 'long', or a valid strftime pattern like '%Y%m%d%H%M'."
+            )
+            raise ValueError(msg) from e
+
+        if not preview.isdigit():
+            msg = (
+                f"Invalid timestamp format '{timestamp_fmt}': "
+                "timestamp must consist of digits only. "
+                "Use 'short', 'long', or a valid digit-only strftime pattern like '%Y%m%d%H%M'."
+            )
+            raise ValueError(msg)
+
+        return timestamp_fmt
 
     def update(
         self,
