@@ -39,7 +39,7 @@ build-backend = "hatchling.build"
 
 [tool.hatch.version]
 path = "yourpkg/_version.py"
-source = "vcs-dev-timestamp"
+source = "vcs-dev-timestamp"  # enables this plugin
 validate-bump = true
 
 [tool.hatch.version.raw-options]
