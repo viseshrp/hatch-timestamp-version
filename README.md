@@ -33,18 +33,14 @@ pip install hatch-timestamp-version
 In your ``pyproject.toml``:
 ```toml
 [build-system]
-requires = ["hatchling", "hatch-timestamp-version"]
+requires = ["hatchling", "hatch-timestamp-version>=0.0.4"]
 build-backend = "hatchling.build"
 
 [tool.hatch.version]
-source = "vcs"
+path = "reelname/_version.py"
+source = "timestamp-dev"
 scheme = "timestamp-dev"
 validate-bump = true
-path = "your_pkg/_version.py"
-
-[tool.hatch.version.raw-options]
-local_scheme = "no-local-version"
-version_scheme = "guess-next-dev"
 ```
 
 ## 🛠️ Features
