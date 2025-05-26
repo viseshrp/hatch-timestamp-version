@@ -12,10 +12,13 @@ from .ts_scheme import TimestampDevVersionScheme
 class TSVersionSource(VCSVersionSource):
     PLUGIN_NAME: str = "timestamp-dev"
 
+    def is_dev_version(self, version: str) -> bool:
+        return ".dev" in version and version.split(".dev")[-1].isdigit()
+
     def get_version_data(self) -> Any:
         version_data = super().get_version_data()
         version = version_data.get("version", "")
-        if ".dev" in version and version.endswith(".dev0"):
+        if self.is_dev_version(version):
             scheme = TimestampDevVersionScheme(self.root, self.config)
             version_data["version"] = scheme.update(version, version, version_data)
         return version_data
