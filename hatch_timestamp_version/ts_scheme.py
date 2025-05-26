@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from functools import cached_property
 
 from hatchling.version.scheme.plugin.interface import VersionSchemeInterface
 from packaging.version import parse as parse_version
@@ -6,6 +7,45 @@ from packaging.version import parse as parse_version
 
 class TimestampDevVersionScheme(VersionSchemeInterface):
     PLUGIN_NAME: str = "timestamp-dev"
+
+    def __init__(self, root: str, config: dict[str, str], timestamp_fmt: str) -> None:
+        super().__init__(root, config)
+        self._timestamp_fmt: str = timestamp_fmt
+
+    @cached_property
+    def timestamp_fmt(self) -> str:
+        """
+        This is the value of the `timestamp_format` option.
+
+
+        ```toml config-example
+        [tool.hatch.version.raw-options]
+        local_scheme = "no-local-version"
+        timestamp_format = "short"
+        ```
+        """
+        timestamp_fmt = self._timestamp_fmt
+        if not isinstance(timestamp_fmt, str):
+            message = "option `timestamp_format` must be a string"
+            raise TypeError(message)
+        # Get format string from user config
+        if timestamp_fmt == "short":
+            fmt = "%Y%m%d"
+        elif timestamp_fmt == "long" or timestamp_fmt == "default":
+            fmt = "%Y%m%d%H%M%S"
+        else:
+            # Validate custom strftime format
+            try:
+                datetime.now(timezone.utc).strftime(timestamp_fmt)
+                fmt = timestamp_fmt
+            except Exception as e:
+                msg = (
+                    f"Invalid timestamp format '{timestamp_fmt}'. "
+                    "Use 'short', 'long', or a valid strftime pattern like '%Y%m%d%H%M'."
+                )
+                raise ValueError(msg) from e
+
+        return fmt
 
     def update(
         self,
@@ -24,25 +64,7 @@ class TimestampDevVersionScheme(VersionSchemeInterface):
         if not desired_version or ".dev" not in desired_version:
             return desired_version or original_version
 
-        # Get format string from user config
-        fmt_option = self.config.get("timestamp_format", "long")
-        if fmt_option == "short":
-            fmt = "%Y%m%d"
-        elif fmt_option == "long" or fmt_option == "default":
-            fmt = "%Y%m%d%H%M%S"
-        else:
-            # Validate custom strftime format
-            try:
-                datetime.now(timezone.utc).strftime(fmt_option)
-                fmt = fmt_option
-            except Exception as e:
-                msg = (
-                    f"Invalid timestamp format '{fmt_option}'. "
-                    "Use 'short', 'long', or a valid strftime pattern like '%Y%m%d%H%M'."
-                )
-                raise ValueError(msg) from e
-
-        timestamp = datetime.now(timezone.utc).strftime(fmt)
+        timestamp = datetime.now(timezone.utc).strftime(self.timestamp_fmt)
         base_version, _, _ = desired_version.rpartition(".dev")
         new_version = f"{base_version}.dev{timestamp}"
 
