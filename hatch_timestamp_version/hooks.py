@@ -9,19 +9,31 @@ from hatchling.version.scheme.plugin.interface import VersionSchemeInterface
 from .ts_scheme import TimestampDevVersionScheme
 
 
+class TSVersionSource(VCSVersionSource):
+    PLUGIN_NAME: str = "timestamp-dev"
+
+
+class TSBuildHook(VCSBuildHook):
+    PLUGIN_NAME: str = "timestamp-dev"
+
+
+class TSMetadataHook(VCSMetadataHook):
+    PLUGIN_NAME: str = "timestamp-dev"
+
+
 @hookimpl
 def hatch_register_version_source() -> Any:
-    return VCSVersionSource
+    return TSVersionSource
 
 
 @hookimpl
 def hatch_register_build_hook() -> Any:
-    return VCSBuildHook
+    return TSBuildHook
 
 
 @hookimpl
 def hatch_register_metadata_hook() -> Any:
-    return VCSMetadataHook
+    return TSMetadataHook
 
 
 @hookimpl
