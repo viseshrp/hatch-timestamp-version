@@ -214,5 +214,11 @@ severity_level = "high"
 require_serial = true
 exclude_dirs = ["venv/*", ".venv/*", "tests/*", "hatch_timestamp_version/_vendor/*"]
 
+[tool.deptry]
+extend_exclude = [
+    "hatch_timestamp_version/_vendor/.*",
+    "vendor/*"
+]
+
 [tool.pre-commit.default_language_versions]
 python = "3.13"
