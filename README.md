@@ -44,6 +44,7 @@ validate-bump = true
 
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"
+# the only available config option for this plugin
 timestamp_format = "short"  # or "long" for full datetime or any strftime string like "%Y%m%d%H%M"
 ```
 
