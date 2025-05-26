@@ -9,7 +9,7 @@ from .ts_scheme import TimestampDevVersionScheme
 
 
 class TSVersionSource(VCSVersionSource):
-    PLUGIN_NAME: str = "timestamp-dev"
+    PLUGIN_NAME: str = "vcs-dev-timestamp"
 
     def construct_setuptools_scm_config(self) -> Any:
         # Inherit base config
@@ -30,11 +30,11 @@ class TSVersionSource(VCSVersionSource):
 
 
 class TSBuildHook(VCSBuildHook):
-    PLUGIN_NAME: str = "timestamp-dev"
+    PLUGIN_NAME: str = "vcs-dev-timestamp"
 
 
 class TSMetadataHook(VCSMetadataHook):
-    PLUGIN_NAME: str = "timestamp-dev"
+    PLUGIN_NAME: str = "vcs-dev-timestamp"
 
 
 @hookimpl

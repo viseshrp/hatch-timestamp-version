@@ -6,7 +6,7 @@ from packaging.version import parse as parse_version
 
 
 class TimestampDevVersionScheme(VersionSchemeInterface):
-    PLUGIN_NAME: str = "timestamp-dev"
+    PLUGIN_NAME: str = "vcs-dev-timestamp"
 
     def __init__(self, root: str, config: dict[str, str], timestamp_fmt: str) -> None:
         super().__init__(root, config)

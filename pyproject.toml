@@ -58,7 +58,7 @@ requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [project.entry-points.hatch]
-timestamp-dev = "hatch_timestamp_version.hooks"
+vcs-dev-timestamp = "hatch_timestamp_version.hooks"
 
 [tool.hatch.version]
 source = "vcs"
