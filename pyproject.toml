@@ -10,6 +10,7 @@ dependencies = [
     "packaging>=25.0",
     "hatchling>=1.1.0",
     "setuptools-scm>=8.2.0",
+    "hatch-vcs>=0.4.0",
 ]
 license = { text = "MIT" }
 classifiers = [
@@ -90,7 +91,6 @@ show_error_codes = true
 ignore_missing_imports = true
 follow_imports = "silent"
 disable_error_code = ["import-untyped"]
-exclude = "hatch_timestamp_version/_vendor"
 
 [tool.pytest.ini_options]
 tmp_path_retention_policy = "failed"
@@ -143,7 +143,7 @@ show_contexts = true
 [tool.ruff]
 target-version = "py39"
 line-length = 100
-exclude = [".venv", "__init__.py", "hatch_timestamp_version/_vendor"]
+exclude = [".venv", "__init__.py"]
 fix = true
 
 [tool.ruff.lint]
@@ -210,14 +210,10 @@ quiet-level = 3
 
 [tool.bandit]
 targets = ["hatch_timestamp_version", ]
-exclude_dirs = ["venv/*", ".venv/*", "tests/*", "hatch_timestamp_version/_vendor/*"]
+exclude_dirs = ["venv/*", ".venv/*", "tests/*"]
 
 [tool.deptry]
 exclude = ["venv/.*", ".venv/.*", "tests/.*"]
-extend_exclude = [
-    "hatch_timestamp_version/_vendor/.*",
-    "vendor/*"
-]
 
 [tool.vulture]
 paths = ["hatch_timestamp_version", "tests"]
