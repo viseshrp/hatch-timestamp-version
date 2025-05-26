@@ -9,7 +9,6 @@ requires-python = ">=3.9,<4.0"
 dependencies = [
     "packaging>=25.0",
     "hatchling>=1.1.0",
-    "setuptools-scm>=8.2.0",
     "hatch-vcs>=0.4.0",
 ]
 license = { text = "MIT" }
