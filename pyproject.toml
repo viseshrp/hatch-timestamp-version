@@ -54,19 +54,20 @@ dev = [
 ]
 
 [build-system]
-requires = ["hatchling", "hatch-vcs"]
+requires = ["hatchling", "hatch-timestamp-version"]
 build-backend = "hatchling.build"
 
 [project.entry-points.hatch]
 vcs-dev-timestamp = "hatch_timestamp_version.hooks"
 
 [tool.hatch.version]
-source = "vcs"
 path = "hatch_timestamp_version/_version.py"
+source = "vcs-dev-timestamp"  # enables this plugin
+validate-bump = true
 
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"
-version_scheme = "guess-next-dev"
+timestamp_format = "long"
 
 [tool.hatch.build.targets.wheel]
 packages = ["hatch_timestamp_version"]
