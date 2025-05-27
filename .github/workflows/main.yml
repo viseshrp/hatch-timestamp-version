@@ -55,9 +55,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install plugin locally
-        run: uv pip install -e .[dev]
-
       - name: Run tests
         run: make test
 
