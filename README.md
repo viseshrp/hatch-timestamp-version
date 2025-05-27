@@ -9,8 +9,9 @@
 [![Lint: Ruff](https://img.shields.io/badge/lint-ruff-000000.svg)](https://docs.astral.sh/ruff/)
 [![Typing: mypy](https://img.shields.io/badge/typing-checked-blue.svg)](https://mypy.readthedocs.io/en/stable/)
 
-> A [hatch](https://hatch.pypa.io/) plugin that provides a custom version scheme using UTC timestamps for
-> development versions. It is based on top of [hatch-vcs](https://github.com/ofek/hatch-vcs).
+> A [hatch](https://hatch.pypa.io/) plugin that provides a custom version scheme using git
+> tags for release versions and a combination of git tags and UTC timestamps for development versions.
+> Based on top of [hatch-vcs](https://github.com/ofek/hatch-vcs).
 
 ## 🚀 Why this project exists
 
