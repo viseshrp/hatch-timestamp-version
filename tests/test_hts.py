@@ -1,8 +1,14 @@
 import datetime as real_datetime
+from pathlib import Path
 import re
+import shutil
+import subprocess
+import textwrap
 from typing import Any
 
 from hatch_vcs.version_source import VCSVersionSource
+from hatchling.metadata.core import ProjectMetadata
+from hatchling.plugin.manager import PluginManager
 import pytest
 
 from hatch_timestamp_version import hooks, ts_scheme
@@ -11,7 +17,8 @@ from hatch_timestamp_version.ts_scheme import TimestampDevVersionScheme
 
 
 def test_hook() -> None:
-    assert hooks.hatch_register_version_source()
+    plugin = hooks.hatch_register_version_source()
+    assert issubclass(plugin, VCSVersionSource)
 
 
 def test_short_timestamp_format() -> None:
@@ -59,8 +66,9 @@ class FrozenDatetime(real_datetime.datetime):
 def test_validate_bump_triggers_error(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(ts_scheme, "datetime", FrozenDatetime)
 
-    scheme = ts_scheme.TimestampDevVersionScheme(root=".", config={}, timestamp_fmt="short")
-    scheme.validate_bump = True
+    scheme = ts_scheme.TimestampDevVersionScheme(
+        root=".", config={"validate-bump": True}, timestamp_fmt="short"
+    )
 
     v1: str = scheme.update("1.0.0.dev0", "1.0.0.dev0", {})
     with pytest.raises(ValueError, match="not greater than original"):
@@ -120,3 +128,63 @@ def test_get_version_data_with_non_dev(monkeypatch: pytest.MonkeyPatch) -> None:
     source = Patched()
     version_data: dict[str, str] = source.get_version_data()
     assert version_data["version"] == "0.2.0"
+
+
+@pytest.mark.parametrize(
+    "timestamp_format, expected_pattern",
+    [
+        ("short", r"0\.1\.dev\d{8}"),  # YYYYMMDD
+        ("long", r"0\.1\.dev\d{14}"),  # YYYYMMDDHHMMSS
+        ("%Y%m%d%H%M", r"0\.1\.dev\d{12}"),  # Custom
+    ],
+)
+def test_hatch_version_timestamp_formats(
+    tmp_path: Path, timestamp_format: str, expected_pattern: str
+) -> None:
+    # Setup temp package dir
+    project_dir = tmp_path / "project"
+    pkg_dir = project_dir / "my_pkg"
+    pkg_dir.mkdir(parents=True)
+    (pkg_dir / "__init__.py").touch()
+
+    # Write pyproject.toml
+    pyproject = project_dir / "pyproject.toml"
+    pyproject.write_text(
+        textwrap.dedent(
+            f"""\
+        [project]
+        name = "demo"
+        dynamic = ["version"]
+        description = "Dummy project for plugin testing"
+        dependencies = []
+        [build-system]
+        requires = ["hatchling", "hatch-timestamp-version @ file:../../"]
+        build-backend = "hatchling.build"
+        [tool.hatch.version]
+        source = "vcs-dev-timestamp"
+        validate-bump = true
+        [tool.hatch.version.raw-options]
+        local_scheme = "no-local-version"
+        timestamp_format = "{timestamp_format}"
+    """
+        )
+    )
+    # Git init and commit
+    subprocess.run(["git", "init", "-b", "main"], cwd=project_dir, check=True)
+    subprocess.run(["git", "config", "user.email", "test@example.com"], cwd=project_dir, check=True)
+    subprocess.run(["git", "config", "user.name", "Test"], cwd=project_dir, check=True)
+    subprocess.run(["git", "add", "."], cwd=project_dir, check=True)
+    subprocess.run(["git", "commit", "-m", "initial"], cwd=project_dir, check=True)
+
+    # Load project metadata (this uses the plugin under the hood)
+    metadata = ProjectMetadata(str(project_dir), PluginManager())
+    version = metadata.version
+
+    assert version.startswith("0.1.dev")
+    assert re.fullmatch(expected_pattern, version)
+
+    # Optional cleanup
+    for path in [".git", ".hatch", "__pycache__"]:
+        dir_to_remove = project_dir / path
+        if dir_to_remove.exists():
+            shutil.rmtree(dir_to_remove, ignore_errors=True)

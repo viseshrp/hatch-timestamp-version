@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 from functools import cached_property
+from typing import Any
 
 from hatchling.version.scheme.plugin.interface import VersionSchemeInterface
 from packaging.version import parse as parse_version
@@ -8,7 +9,7 @@ from packaging.version import parse as parse_version
 class TimestampDevVersionScheme(VersionSchemeInterface):
     PLUGIN_NAME: str = "vcs-dev-timestamp"
 
-    def __init__(self, root: str, config: dict[str, str], timestamp_fmt: str) -> None:
+    def __init__(self, root: str, config: dict[str, Any], timestamp_fmt: str) -> None:
         super().__init__(root, config)
         self._timestamp_fmt: str = timestamp_fmt
 
