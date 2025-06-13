@@ -1,3 +1,5 @@
+"""The version module for the hatch-timestamp-version package."""
+
 from importlib.metadata import PackageNotFoundError, version
 
 try:

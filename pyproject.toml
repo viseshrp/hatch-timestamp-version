@@ -39,18 +39,24 @@ CI = "https://github.com/viseshrp/hatch-timestamp-version/actions"
 
 [dependency-groups]
 dev = [
-    "pre-commit>=4.2.0",
-    "uv>=0.6.17",
-    "tox>=4.25.0",
-    "tox-uv>=1.25.0",
-    "tox-gh-actions>=3.3.0",
-    "mypy>=1.15.0",
-    "deptry>=0.23.0",
-    "pytest>=8.3.5",
-    "pytest-cov>=6.1.1",
-    "vulture>=2.14",
-    "twine>=6.1.0",
-    "ipdb>=0.13.13",
+    "ipdb",
+    "uv",
+    "tox",
+    "tox-uv",
+    "tox-gh-actions",
+    "pytest",
+    "pytest-cov",
+    "pre-commit",
+    "black",
+    "ruff",
+    "pip-audit",
+    "bandit[toml]",
+    "codespell",
+    "mypy",
+    "vulture",
+    "deptry",
+    "twine",
+    "hatch",
 ]
 
 [build-system]
@@ -62,7 +68,7 @@ vcs-dev-timestamp = "hatch_timestamp_version.hooks"
 
 [tool.hatch.version]
 path = "hatch_timestamp_version/_version.py"
-source = "vcs-dev-timestamp"  # enables this plugin
+source = "vcs-dev-timestamp"
 validate-bump = true
 
 [tool.hatch.version.raw-options]
@@ -74,6 +80,9 @@ packages = ["hatch_timestamp_version"]
 
 [tool.hatch.build.targets.editable]
 packages = ["hatch_timestamp_version"]
+
+[tool.hatch.envs.default]
+path = ".venv"
 
 [tool.uv]
 default-groups = "all"
@@ -143,8 +152,9 @@ show_contexts = true
 [tool.ruff]
 target-version = "py39"
 line-length = 100
-exclude = [".venv", "__init__.py"]
 fix = true
+unsafe-fixes = true
+exclude = [".venv", "__init__.py"]
 
 [tool.ruff.lint]
 fixable = ["ALL"]
@@ -194,6 +204,7 @@ max-complexity = 10
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101", "S603", "S607", "UP022"]
+"scripts/*.py" = ["T201"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["hatch_timestamp_version", "tests"]
